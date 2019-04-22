@@ -1,0 +1,279 @@
+# These are the Two Sensors that I have added to my project to be recorded 
+# This first one is the Temperature reading 
+
+
+
+#Dweet.io
+dweetIO = "https://dweet.io/dweet/for/"
+myName =  dweetName #"yourthingID"
+soundKeyTwo = "Temperature Level" 
+
+
+from grovepi import *
+
+from grove_rgb_lcd import *
+
+from time import sleep
+
+from math import isnan
+
+
+
+dht_sensor_port = 7 # connect the DHt sensor to port 7
+
+dht_sensor_type = 0 # use 0 for the blue-colored sensor and 1 for the white-colored sensor
+
+
+
+# set green as backlight color
+
+# we need to do it just once
+
+# setting the backlight color once reduces the amount of data transfer over the I2C line
+
+setRGB(0,255,0)
+
+
+
+while True:
+
+	try:
+
+        # get the temperature and Humidity from the DHT sensor
+
+		[ temp,hum ] = dht(dht_sensor_port,dht_sensor_type)
+
+		print("temp =", temp, "C\thumidity =", hum,"%")
+
+
+
+		# check if we have nans
+
+		# if so, then raise a type error exception
+
+		if isnan(temp) is True or isnan(hum) is True:
+
+			raise TypeError('nan error')
+
+
+
+		t = str(temp)
+
+		h = str(hum)
+
+
+
+        # instead of inserting a bunch of whitespace, we can just insert a \n
+
+        # we're ensuring that if we get some strange strings on one line, the 2nd one won't be affected
+
+		setText_norefresh("Temp:" + t + "C\n" + "Humidity :" + h + "%")
+
+
+
+	except (IOError, TypeError) as e:
+
+		print(str(e))
+
+		# and since we got a type error
+
+		# then reset the LCD's text
+
+		setText("")
+
+
+
+	except KeyboardInterrupt as e:
+
+		print(str(e))
+
+		# since we're exiting the program
+
+		# it's better to leave the LCD with a blank text
+
+		setText("")
+
+		break
+
+
+
+	# wait some time before re-updating the LCD
+
+	sleep(0.05) 
+	
+
+# I will add a third sensor which will light up an LED Light and fade it and record the flickering of the light 
+
+import time
+
+import grovepi
+
+
+
+# Connect the Rotary Angle Sensor to analog port A2
+
+potentiometer = 5
+
+
+
+# Connect the LED to digital port D5
+
+led = 10
+
+
+
+grovepi.pinMode(led,"OUTPUT")
+
+time.sleep(1)
+
+i = 0
+
+
+
+while True:
+
+    try:
+
+        # Read resistance from Potentiometer
+
+        i = grovepi.analogRead(potentiometer)
+
+        print(i)
+
+
+
+        # Send PWM signal to LED
+
+        grovepi.analogWrite(led,i//4)
+
+
+
+    except IOError:
+
+        print("Error")
+
+
+
+
+
+
+
+# Additional Humidity Sensor 
+
+from grovepi import *
+
+from grove_rgb_lcd import *
+
+from time import sleep
+
+from math import isnan
+
+
+
+dht_sensor_port = 7 # connect the DHt sensor to port 7
+
+dht_sensor_type = 0 # use 0 for the blue-colored sensor and 1 for the white-colored sensor
+
+
+
+# set green as backlight color
+
+# we need to do it just once
+
+# setting the backlight color once reduces the amount of data transfer over the I2C line
+
+setRGB(0,255,0)
+
+
+
+while True:
+
+	try:
+
+        # get the temperature and Humidity from the DHT sensor
+
+		[ temp,hum ] = dht(dht_sensor_port,dht_sensor_type)
+
+		print("temp =", temp, "C\thumidity =", hum,"%")
+
+
+
+		# check if we have nans
+
+		# if so, then raise a type error exception
+
+		if isnan(temp) is True or isnan(hum) is True:
+
+			raise TypeError('nan error')
+
+
+
+		t = str(temp)
+
+		h = str(hum)
+
+
+
+        # instead of inserting a bunch of whitespace, we can just insert a \n
+
+        # we're ensuring that if we get some strange strings on one line, the 2nd one won't be affected
+
+		setText_norefresh("Temp:" + t + "C\n" + "Humidity :" + h + "%")
+
+
+
+	except (IOError, TypeError) as e:
+
+		print(str(e))
+
+		# and since we got a type error
+
+		# then reset the LCD's text
+
+		setText("")
+
+
+
+	except KeyboardInterrupt as e:
+
+		print(str(e))
+
+		# since we're exiting the program
+
+		# it's better to leave the LCD with a blank text
+
+		setText("")
+
+		break
+
+
+
+	# wait some time before re-updating the LCD
+
+	sleep(0.05)
+	
+	
+	 Highcharts.setOptions({
+     time: {
+     timezoneOffset: 5 * 60
+     }
+  });
+
+     Highcharts.chart('container', {
+     title: {
+     text: 'This is a reference to the times and dates in which the data points were recorded.'
+  },
+
+  xAxis: {
+    type: 'datetime'
+  },
+
+  series: [{
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+    pointStart: Date.UTC(2013, 0, 1),
+    pointInterval: 36e5 // one hour
+  }]
+});
+   
+	
+	
